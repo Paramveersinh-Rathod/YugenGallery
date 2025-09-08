@@ -37,7 +37,7 @@ const Card = mongoose.model("Card", cardSchema);
 
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use Render's port if available
 const cards = {}
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));

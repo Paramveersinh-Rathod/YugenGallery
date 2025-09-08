@@ -9,17 +9,24 @@
 </head>
 <body>
     <header class="Introheader">
-        <a id="adminsvg" href=""><img src="logo.png" alt="logo" width="150px" height="26px" id="logo"></a>
-        <div id="links"> 
+        <div class="logo-container">
+            <a id="adminsvg" href=""><img src="logo.png" alt="logo" width="150px" height="26px" id="logo"></a>
+        </div>
+        <button class="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div id="links">
             <div class="music-controller-container">
                 <img src="music-disk.jpeg" alt="Music Controller" id="music-controller">
                 <span class="tooltip-text">Click Me</span>
+                <select id="track-selector">
+                    <option value="track1.mp3">Track 1 - Tea Garden</option>
+                    <option value="track2.mp3">Track 2 - Mystical Nightfall</option>
+                    <option value="track3.mp3">Track 3 - Bamboo Grove</option>
+                </select>
             </div>
-            <select id="track-selector">
-                <option value="track1.mp3">Track 1 - Tea Garden</option>
-                <option value="track2.mp3">Track 2 - Mystical Nightfall</option>
-                <option value="track3.mp3">Track 3 - Bamboo Grove</option>
-            </select>    
             <a id="blogs" href="#viewpostloc" class="d-none d-md-block">View Posts</a>
 
         </div>

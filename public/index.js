@@ -3,9 +3,15 @@ const formOverlay = document.getElementById('formOverlay');
 const closeButton = document.getElementById('closeNPButton');
 const contentInput = document.getElementById('NPbody');
 const charCountDisplay  = document.getElementById('NPcharCount');
+const hamburgerMenu = document.querySelector('.hamburger-menu');
+const navLinks = document.getElementById('links');
 
 let selectedTitle = "";
 
+hamburgerMenu.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    hamburgerMenu.classList.toggle('active');
+});
 // Show the form overlay
 newPostButton.addEventListener('click', () => {
     formOverlay.style.display = 'flex';
@@ -38,11 +44,12 @@ if (newPostForm) {
 document.addEventListener("DOMContentLoaded", function () {
     const adminSvg = document.getElementById("adminsvg");
     const adminButtons = document.querySelectorAll(".admin-btn");
+    const logoContainer = document.querySelector(".logo-container");
 
     if (adminSvg) {
         adminSvg.addEventListener("click", function (event) {
             event.preventDefault(); // Prevents the default behavior of the anchor tag
-            
+            logoContainer.classList.toggle('admin-mode-active');
             adminButtons.forEach(button => {
                 if (button.style.display === "none" || button.style.display === "") {
                     button.style.display = "block";
@@ -103,7 +110,7 @@ contentInput.addEventListener('input', () => {
     fetch("/delete", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ id:selectedId, imageid: selectedImgId  }) 
+      body: new URLSearchParams({ id:selectedId, imageid: selectedImgId  })
     }).then(() => window.location.reload());
   }
   function openEditForm() {
@@ -198,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trackSelector.addEventListener('change', (event) => {
         const wasPlaying = !music.paused;
         music.src = event.target.value;
-        music.load(); 
+        music.load();
 
         if (wasPlaying) {
             music.play().catch(e => console.log("Error playing new track:", e));

@@ -22,51 +22,79 @@ body {
     display: none;
 } */
 
-.Introheader{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: flex;
-    list-style: none;
-    justify-content:space-between;
-    background-color: white;
-    height: 8vh;
-}
-#logo{
-    margin: 15px 0px 15px 25px;
+/* ===== NAVBAR STYLES ===== */
 
-}
-#links{
+/* The main header container */
+.Introheader {
+    background-color: #ffffff;
+    padding: 1rem 2rem; /* Use rem for scalable spacing */
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center; /* Vertically center items */
+    border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Modern shadow for depth */
 }
-#adminsvg, #blogs{
-    margin: 8px 20px 0px 0px;
-    font-size: 23px;
-    color: #ff252c;
-    font-family: 'M PLUS Rounded 1c', sans-serif; /* Header font */
-    font-weight: 700; /* Bold weight for titles */
-    transition: font-size 0.3s;
+
+/* Logo styling */
+#logo {
+    height: 30px; /* Adjusted for better proportion */
+    width: auto;
+    margin: 0; /* Reset margin */
+}
+
+/* Container for the navigation links */
+#links {
+    display: flex;
+    align-items: center; /* Align items in the links div */
+    gap: 25px; /* Add space between links */
+}
+
+
+/* Styling for the admin icon link */
+#adminsvg {
+    display: flex; 
+    align-items: center;
+    margin: 0; /* Reset margin */
+    border-radius: 50%; /* Make the hover effect circular */
+    transition: background-color 0.3s ease;
+    padding: 5px; /* Add some padding for the hover effect */
+}
+
+
+#adminsvg:hover {
+    background-color: #f0f0f0; /* Subtle background on hover */
+}
+
+
+/* Styling for "View Posts" with an animated underline effect */
+#blogs {
+    font-size: 1.2rem; /* A little larger for more presence */
+    color: #a50034;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 700;
     text-decoration: none;
-}
-#blogs{
-    animation: pulse 1s infinite;
-}
-
-#adminsvg:hover, #blogs:hover{
-    color: #BC002D;
-    animation: none;
+    position: relative; /* Required for positioning the underline */
+    padding-bottom: 5px; /* Adds space for the underline to appear below the text */
+    transition: color 0.3s ease;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
+/* This creates the underline element, initially hidden */
+#blogs::after {
+    content: '';
+    position: absolute;
+    width: 0; /* The underline starts with zero width */
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #e63946;
+    transition: width 0.3s ease; /* Animate the width property */
 }
 
+/* On hover, the underline grows to full width */
+#blogs:hover::after {
+    width: 100%;
+}
 
 .mainHeading{
     color: #f8f5f0;
@@ -473,4 +501,189 @@ footer{
     height: 30px;
     cursor: pointer;
     font-size: 1rem;
+}
+
+/* ===== MUSIC CONTROLLER STYLES ===== */
+
+#music-controller {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+#music-controller:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+/* This class will be added by JavaScript to make the disk spin */
+.playing {
+    animation: spin 4s linear infinite;
+    animation-play-state: running; /* Animation is running by default */
+}
+
+.playing.paused {
+    animation-play-state: paused; /* Pause the animation when paused class is added */
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* ===== TRACK SELECTOR STYLES ===== */
+
+#track-selector {
+    background-color: #f4f1ea; /* Light background */
+    color: #4d1b1b; /* Dark red text */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: -10px; /* Nudge it closer to the disk */
+    margin-right: 15px; /* Add space between it and the next link */
+}
+
+#track-selector:focus {
+    outline: none;
+    border-color: #a50034; /* Highlight border on focus */
+}
+
+/* ===== Tooltip for Music Controller (Final Position) ===== */
+
+/* The container for the disk and its tooltip */
+.music-controller-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* The tooltip text itself */
+.music-controller-container .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 90px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 130%; /* Position it BELOW the disk */
+    transform: translateX(15px); /* ...then push it 15px to the right */
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* This creates the little arrow/bump */
+.music-controller-container .tooltip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%; /* Position the arrow at the top of the tooltip */
+    left: 15px;  /* Position the arrow 15px from the left edge of the tooltip */
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent; /* Creates an upward-pointing arrow */
+}
+
+/* This class will be added by JS to make the tooltip visible */
+.tooltip-text.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ===== CURSOR LEAF TRAIL ===== */
+
+.leaf-trail {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    background-image: url('/red-leaf.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    /* --- ADJUST THIS DURATION (must match the JS timeout) --- */
+    animation: fallAndFade 1.5s linear forwards; /* Faster: 1.5 seconds */
+}
+
+@keyframes fallAndFade {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100px) rotate(270deg); /* Falls a shorter distance */
+        opacity: 0;
+    }
+}
+/* ===== LOADER STYLES (Corrected with Masking) ===== */
+
+#loaderOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(248, 245, 240, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.75s ease;
+}
+
+#loaderOverlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* The "Yūgen" text style */
+.loader-text {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 0.1em;
+    position: relative; /* Needed for the pseudo-element */
+    
+    /* The text itself is the base red color */
+    color: #a50034;
+}
+
+/* This pseudo-element creates the shimmer ON TOP of the text */
+.loader-text::before {
+    content: attr(data-text); /* Duplicates the text from your HTML's data-text attribute */
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    /* The shimmer color is white */
+    color: #ffffff; 
+    
+    /* This is the key: we create a mask that reveals the white text */
+    -webkit-mask-image: linear-gradient(120deg, transparent 30%, white 50%, transparent 70%);
+    mask-image: linear-gradient(120deg, transparent 30%, white 50%, transparent 70%);
+    -webkit-mask-size: 200% 100%;
+    mask-size: 200% 100%;
+    
+    /* The animation moves the MASK, not the background */
+    animation: shimmer-mask 3s infinite linear;
+}
+
+/* The animation that moves the mask from left to right */
+@keyframes shimmer-mask {
+    from {
+        -webkit-mask-position: 150% 0;
+        mask-position: 150% 0;
+    }
+    to {
+        -webkit-mask-position: -50% 0;
+        mask-position: -50% 0;
+    }
 }
